@@ -1,0 +1,184 @@
+// runnning mongoDb
+- npx mongosh
+
+//creating database
+- use address_db
+address_db>
+admin     40.00 KiBess_db
+config    96.00 KiB
+local     40.00 KiB
+movie_db  72.00 KiB
+wave38    80.00 KiB
+
+//inserting collection with data
+address_db> db.address.insertOne({houseNo:23,streetname:"Main Dave Street",city:"New York",zipcode:7002})
+{dmin     40.00 KiBess_db
+  acknowledged: true,
+  insertedId: ObjectId("63ac1b217dcd25533848fddd")
+}ovie_db  72.00 KiB
+
+//inserting many data
+address_db> db.address.insertMany([{houseNo:24,streetname:"Main Dave Street",city:"Rochester",zipcode:7003},{houseNo:25,streetname:"Main prince Street",city:"New York",zipcode:7004},{houseNo:26,streetname:"Main Dave Street",city:"Kingston",zipcode:7005},{houseNo:27,streetname:"Main Queen Street",city:"New York",zipcode:7012},{houseNo:32,streetname:"temp Dave Street",city:"Kingston",zipcode:7002},{houseNo:42,streetname:"Main Dave Street",city:"Rochester",zipcode:7002},{houseNo:23,streetname:"Main Dave Street",city:"Kingston",zipcode:7502}])
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId("63ac1cf17dcd25533848fdde"),
+    '1': ObjectId("63ac1cf17dcd25533848fddf"),
+    '2': ObjectId("63ac1cf17dcd25533848fde0"),
+    '3': ObjectId("63ac1cf17dcd25533848fde1"),
+    '4': ObjectId("63ac1cf17dcd25533848fde2"),
+    '5': ObjectId("63ac1cf17dcd25533848fde3"),
+    '6': ObjectId("63ac1cf17dcd25533848fde4")
+  }
+}
+
+//Display all addresses in a formatted manner
+address_db> db.address.find().pretty()
+[
+  {
+    _id: ObjectId("63ac1b217dcd25533848fddd"),
+    houseNo: 23,
+    streetname: 'Main Dave Street',
+    city: 'New York',
+    zipcode: 7002
+  },
+  {
+    _id: ObjectId("63ac1cf17dcd25533848fdde"),
+    houseNo: 24,
+    streetname: 'Main Dave Street',
+    city: 'Rochester',
+    zipcode: 7003
+  },
+  {
+    _id: ObjectId("63ac1cf17dcd25533848fddf"),
+    houseNo: 25,
+    streetname: 'Main prince Street',
+    city: 'New York',
+    zipcode: 7004
+  },
+  {
+    _id: ObjectId("63ac1cf17dcd25533848fde0"),
+    houseNo: 26,
+    streetname: 'Main Dave Street',
+    city: 'Kingston',
+    zipcode: 7005
+  },
+  {
+    _id: ObjectId("63ac1cf17dcd25533848fde1"),
+    houseNo: 27,
+    streetname: 'Main Queen Street',
+    city: 'New York',
+    zipcode: 7012
+  },
+  {
+    _id: ObjectId("63ac1cf17dcd25533848fde2"),
+    houseNo: 32,
+    streetname: 'temp Dave Street',
+    city: 'Kingston',
+    zipcode: 7002
+  },
+  {
+    _id: ObjectId("63ac1cf17dcd25533848fde3"),
+    houseNo: 42,
+    streetname: 'Main Dave Street',
+    city: 'Rochester',
+    zipcode: 7002
+  },
+  {
+    _id: ObjectId("63ac1cf17dcd25533848fde4"),
+    houseNo: 23,
+    streetname: 'Main Dave Street',
+    city: 'Kingston',
+    zipcode: 7502
+  }
+]
+
+//Find the address by city Rochester
+address_db> db.address.find({city:'Rochester'})
+[
+  {
+    _id: ObjectId("63ac1cf17dcd25533848fdde"),
+    houseNo: 24,
+    streetname: 'Main Dave Street',
+    city: 'Rochester',
+    zipcode: 7003
+  },
+  {
+    _id: ObjectId("63ac1cf17dcd25533848fde3"),
+    houseNo: 42,
+    streetname: 'Main Dave Street',
+    city: 'Rochester',
+    zipcode: 7002
+  }
+]
+
+//Count the number of addressess from the city New York
+address_db> db.address.find({city:'New York'}).count()
+(node:1088) [MONGODB DRIVER] Warning: cursor.count is deprecated and will be removed in the next major version, please use `collection.estimatedDocumentCount` or `collection.countDocuments` instead
+(Use `node --trace-warnings ...` to show where the warning was created)
+3
+
+//Find the address by city Rochester, New York and Kingston.
+address_db> db.address.find({city:{$in:["New York","Kingston","Rochester"]}})
+[ncaught:erError: unknown top level operator: $in. If you have a field name that starts with a '$' symbol, consider using $getField or $setField.
+  {taxError: Unexpected token (1:50)
+    _id: ObjectId("63ac1b217dcd25533848fddd"),
+    houseNo: 23,.find({$in:[{city:"New York","Rochester","Kingston"}]})
+    streetname: 'Main Dave Street',                     ^
+    city: 'New York',
+    zipcode: 7002
+  },
+  {
+    _id: ObjectId("63ac1cf17dcd25533848fdde"),
+    houseNo: 24,
+    streetname: 'Main Dave Street',
+    city: 'Rochester',
+    zipcode: 7003
+  },
+  {
+    _id: ObjectId("63ac1cf17dcd25533848fddf"),
+    houseNo: 25,
+    streetname: 'Main prince Street',
+    city: 'New York',
+    zipcode: 7004
+  },
+  {
+    _id: ObjectId("63ac1cf17dcd25533848fde0"),
+    houseNo: 26,
+    streetname: 'Main Dave Street',
+    city: 'Kingston',
+    zipcode: 7005
+  },
+  {
+    _id: ObjectId("63ac1cf17dcd25533848fde1"),
+    houseNo: 27,
+    streetname: 'Main Queen Street',
+    city: 'New York',
+    zipcode: 7012
+  },
+  {
+    _id: ObjectId("63ac1cf17dcd25533848fde2"),
+    houseNo: 32,
+    streetname: 'temp Dave Street',
+    city: 'Kingston',
+    zipcode: 7002
+  },
+  {
+    _id: ObjectId("63ac1cf17dcd25533848fde3"),
+    houseNo: 42,
+    streetname: 'Main Dave Street',
+    city: 'Rochester',
+    zipcode: 7002
+  },
+  {
+    _id: ObjectId("63ac1cf17dcd25533848fde4"),
+    houseNo: 23,
+    streetname: 'Main Dave Street',
+    city: 'Kingston',
+    zipcode: 7502
+  }
+]
+
+//Delete all documents with city New York
+address_db> db.address.deleteMany({city:"New York"})
+{ acknowledged: true, deletedCount: 3 }
